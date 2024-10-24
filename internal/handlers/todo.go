@@ -1,19 +1,33 @@
 package handlers
 
 import (
+	"html/template"
 	"log"
 	"net/http"
-	"html/template"
+	"os"
 
+	"github.com/gorilla/mux"
 	"github.com/johnull/todo-golang/internal/database"
 	"github.com/johnull/todo-golang/internal/models"
-	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 )
 
 var (
 	db = database.ConnectDB()
-	view = template.Must(template.ParseFiles("../../views/index.html"))
+	view *template.Template
 )
+
+func init() {
+	if err := godotenv.Load("./.env"); err != nil {
+		log.Fatal(err)
+	}
+	viewPath, ok := os.LookupEnv("VIEW_PATH")
+	if !ok {
+		log.Fatal("VIEW_PATH not set")
+	}
+	
+	view = template.Must(template.ParseFiles(viewPath))
+}
 
 func GetItems(w http.ResponseWriter, r *http.Request) {
 	rows, err := db.Query(`SELECT * FROM TodoList`)
