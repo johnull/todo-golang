@@ -5,8 +5,9 @@ import (
 	"net/http"
 	"html/template"
 
-	"github.com/johnull/todo-golang/database"
-	"github.com/johnull/todo-golang/models"
+	"github.com/johnull/todo-golang/internal/database"
+	"github.com/johnull/todo-golang/internal/models"
+	"github.com/gorilla/mux"
 )
 
 var (
@@ -56,7 +57,8 @@ func AddItem(w http.ResponseWriter, r *http.Request) {
 }
 
 func CompleteItem(w http.ResponseWriter, r *http.Request) {
-	id := r.PathValue("id")
+	params := mux.Vars(r)
+	id := params["id"]
 	if _, err := db.Exec(`UPDATE TodoList SET completed = 1 WHERE id = (?)`, id); err != nil {
 		log.Printf("database update item error: %v", err)
 		return

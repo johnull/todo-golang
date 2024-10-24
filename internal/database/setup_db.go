@@ -3,7 +3,6 @@ package database
 import (
 	"database/sql"
 	"log"
-	
 )
 
 func setupDatabase(db *sql.DB) error {
