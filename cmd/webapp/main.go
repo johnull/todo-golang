@@ -10,7 +10,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/johnull/todo-golang/internal/controllers"
+	"github.com/johnull/todo-golang/internal/handlers"
 	"github.com/joho/godotenv"
 	"github.com/gorilla/mux"
 )
@@ -22,10 +22,10 @@ func main() {
 
 	/* ROUTES */
 	router := mux.NewRouter()
-	router.HandleFunc("/", controllers.GetItems)
-	router.HandleFunc("/add", controllers.AddItem).Methods("POST")
-	router.HandleFunc("/complete/{id}", controllers.CompleteItem).Methods("POST")
-	router.HandleFunc("/delete/all", controllers.DeleteCompleted).Methods("POST")
+	router.HandleFunc("/", handlers.GetItems)
+	router.HandleFunc("/add", handlers.AddItem).Methods("POST")
+	router.HandleFunc("/complete/{id}", handlers.CompleteItem).Methods("POST")
+	router.HandleFunc("/delete/all", handlers.DeleteCompleted).Methods("POST")
 
 	// http server config
 	server := &http.Server{
