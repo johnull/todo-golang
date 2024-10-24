@@ -11,7 +11,7 @@ import (
 )
 
 func ConnectDB() *sql.DB {
-	if err := godotenv.Load("../../.env"); err != nil {
+	if err := godotenv.Load("./.env"); err != nil {
 		log.Fatal(err)
 	}
 	
