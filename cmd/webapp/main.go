@@ -10,16 +10,11 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/johnull/todo-golang/internal/handlers"
-	"github.com/joho/godotenv"
 	"github.com/gorilla/mux"
+	"github.com/johnull/todo-golang/internal/handlers"
 )
 
 func main() {
-	if err := godotenv.Load("./.env"); err != nil {
-		log.Fatal("Error loading .env")
-	}
-
 	/* ROUTES */
 	router := mux.NewRouter()
 	router.HandleFunc("/", handlers.GetItems)
@@ -29,13 +24,12 @@ func main() {
 
 	// http server config
 	server := &http.Server{
-		Addr: ":8080",
+		Addr:    ":8080",
 		Handler: router,
 	}
-	
+
 	// starts the server in a goroutine to avoid blocking execution
 	go func() {
-
 		if err := server.ListenAndServe(); !errors.Is(err, http.ErrServerClosed) {
 			log.Fatalf("HTTP server error: %v", err)
 		}
@@ -46,10 +40,9 @@ func main() {
 	sig := make(chan os.Signal, 1)
 	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
 
-	// waits interrupt signals 
+	// waits interrupt signals
 	<-sig
 
-	
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 

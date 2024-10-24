@@ -9,24 +9,21 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/johnull/todo-golang/internal/database"
 	"github.com/johnull/todo-golang/internal/models"
-	"github.com/joho/godotenv"
 )
 
 var (
-	db = database.ConnectDB()
+	db   = database.ConnectDB()
 	view *template.Template
 )
 
 func init() {
-	if err := godotenv.Load("./.env"); err != nil {
-		log.Fatal(err)
-	}
 	viewPath, ok := os.LookupEnv("VIEW_PATH")
 	if !ok {
 		log.Fatal("VIEW_PATH not set")
 	}
-	
+
 	view = template.Must(template.ParseFiles(viewPath))
+
 }
 
 func GetItems(w http.ResponseWriter, r *http.Request) {
@@ -38,7 +35,7 @@ func GetItems(w http.ResponseWriter, r *http.Request) {
 	defer rows.Close()
 
 	var todos []models.Todo
-	
+
 	for rows.Next() {
 		var todo models.Todo
 		if err := rows.Scan(&todo.Id, &todo.Item, &todo.Completed); err != nil {
@@ -47,9 +44,9 @@ func GetItems(w http.ResponseWriter, r *http.Request) {
 		}
 		todos = append(todos, todo)
 	}
-	
+
 	data := models.View{Todos: todos}
-	
+
 	if err := view.Execute(w, data); err != nil {
 		log.Printf("template execute error: %v", err)
 		return
@@ -66,7 +63,7 @@ func AddItem(w http.ResponseWriter, r *http.Request) {
 		log.Printf("database add item error: %v", err)
 		return
 	}
-	
+
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
@@ -77,7 +74,7 @@ func CompleteItem(w http.ResponseWriter, r *http.Request) {
 		log.Printf("database update item error: %v", err)
 		return
 	}
-	
+
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
