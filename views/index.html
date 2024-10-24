@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      padding-top: 4.5rem;
+    }
+
+    .card-title {
+      margin-bottom: 2rem;
+    }
+
+    .form1 {
+      display: flex;
+      flex-direction: row;
+      padding: 1px;
+    }
+
+    .form-input {
+      border: none;
+      flex-grow: 2;
+    }
+
+    .form-input:focus {
+      outline: none;
+    }
+
+    .btn {
+      border-radius: 50px !important;
+
+    }
+
+    .complete-form {
+      display: flex;
+      border: 1px solid red;
+      justify-content: center;
+      align-items: center;
+    }
+
+    input[type=radio] {
+      appearance: none;
+      background-color: #fff;
+      width: 15px;
+      height: 15px;
+      border: 2px solid #ccc;
+      border-radius: 2px;
+      display: inline-grid;
+      place-content: center;
+    }
+
+    input[type=radio]::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      transform: scale(0);
+      transform-origin: bottom left;
+      background-color: #fff;
+      clip-path: polygon(13% 50%, 34% 66%, 81% 2%, 100% 18%, 39% 100%, 0 71%);
+    }
+
+    input[type=radio]:checked::before {
+      transform: scale(1);
+    }
+
+    input[type=radio]:checked {
+      background-color: #0075FF;
+      border: 2px solid #0075FF;
+    }
+  </style>
+</head>
+
+</html>
+
+<body>
+  <div class="container">
+    <div class="card m-5 p-2 rounded mx-auto bg-light shadow" style="width: 40rem">
+      <div class="card-body">
+        <h5 class="card-title" style="font-size: 2rem;">T O D O</h5>
+        <div class="form1">
+          <form action="/add" method="post">
+            <input type="text" class="form-input bg-light" name="current-item" placeholder="Create a new todo..."
+              required>
+            <button type="submit" class="btn btn-primary btn-md">Add</button>
+          </form>
+        </div>
+        <hr>
+        <br>
+        <table class="table table-borderless">
+          <tbody>
+            {{range .Todos}}
+            {{if .Completed}}
+            <tr>
+              <td>
+                <input type="radio" checked>
+                <s style="color: gray; padding-left: 5px;">{{ .Item}}</s>
+                <hr>
+              </td>
+            </tr>
+            {{else}}
+            <tr>
+              <td>
+                <form action="/complete/{{ .Id}}" id="complete-form-{{ .Id}}" method="post">
+                  <input type="radio" onclick="submitForm('complete-form-{{ .Id}}')" name="finish" id="finish">
+                  <span style="padding-left: 5px; display: inline-block;">{{ .Item}}</span>
+                </form>
+
+                <script>
+                  function submitForm(id) {
+                    document.getElementById(id).submit()
+                  }
+                </script>
+                <hr>
+              </td>
+            </tr>
+            {{end}}
+            {{end}}
+
+        </table>
+        <form action="/delete/all" method="post">
+          <button class="btn btn-outline-danger">Clear Completed</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
