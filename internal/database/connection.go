@@ -5,13 +5,18 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
+	"runtime"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
 )
-
+var (
+	_, b, _, _ = runtime.Caller(0)
+	root = filepath.Join(filepath.Dir(b), "../../.env")
+)
 func ConnectDB() *sql.DB {
-	if err := godotenv.Load(); err != nil {
+	if err := godotenv.Load(root); err != nil {
 		log.Fatal(err)
 	}
 

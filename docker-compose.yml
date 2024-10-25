@@ -1,0 +1,30 @@
+services:
+    webapi:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: todo-golang
+        restart: on-failure
+        environment:
+            - DB_HOST=mariadb
+            - DB_USER=user
+            - DB_PASS=1234
+        depends_on:
+            - mariadb
+        ports:
+            - 8080:8080
+    mariadb:
+        image: mariadb
+        container_name: mariadb
+        environment:
+            - MYSQL_ROOT_PASSWORD=1234
+            - MYSQL_DATABASE=todoDB
+            - MYSQL_USER=user
+            - MYSQL_PASSWORD=1234
+        volumes:
+            - database:/var/lib/mysql
+        ports:
+            - 3306:3306
+volumes:
+    api:
+    database:
