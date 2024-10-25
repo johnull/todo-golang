@@ -1,7 +1,7 @@
 # Todo Golang
 Basic to-do list application
 
-#### Installation
+### Installation
 1. Create and modify `.env`
 ```bash
 DB_HOST=
@@ -12,7 +12,8 @@ DB_PASS=
 ```bash
 $ go get ./...
 ```
-3. Local run
+
+### Local run
 Setup database, run mysql/mariadb
 ```bash
 source <complete_path>/db/migration/000001_create_items_table.up.sql
@@ -23,7 +24,7 @@ $ go run cmd/webapp/main.go
 
 http://localhost:8080
 ```
-4. Docker run
+### Docker run
 ```bash
 $ docker compose up -d
 ```
@@ -35,7 +36,7 @@ Run app
 ```bash
 http://localhost:8080
 ```
-#### Structure
+### Structure
 ```
 ├── cmd
 │   └── webapp
