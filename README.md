@@ -41,16 +41,24 @@ http://localhost:8080
 ├── cmd
 │   └── webapp
 │       └── main.go
-├── controllers
-│   └── todo.go
-├── database
-│   ├── connection.go
-│   └── setup_db.go
+├── db
+│   └── migration
+│       ├── 000001_create_items_table.down.sql
+│       └── 000001_create_items_table.up.sql
+├── docker-compose.yml
+├── Dockerfile
 ├── go.mod
 ├── go.sum
-├── models
-│   ├── todo.go
-│   └── todo_view.go
+├── internal
+│   ├── database
+│   │   └── connection.go
+│   ├── handlers
+│   │   └── todo.go
+│   └── models
+│       ├── todo.go
+│       └── todo_view.go
+├── main
+├── README.md
 └── views
     └── index.html
 ```
