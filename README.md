@@ -21,7 +21,7 @@ Run app
 ```
 $ go run cmd/webapp/main.go
 
-http://localhost:1337
+http://localhost:8080
 ```
 4. Docker run
 ```bash
@@ -33,7 +33,7 @@ $ docker run -v <complete_path>/db/migration:/migrations --network host migrate/
 ```
 Run app
 ```bash
-
+http://localhost:8080
 ```
 #### Structure
 ```
