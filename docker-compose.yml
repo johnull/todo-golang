@@ -7,8 +7,8 @@ services:
         restart: on-failure
         environment:
             - DB_HOST=mariadb
-            - DB_USER=user
-            - DB_PASS=1234
+            - DB_USER=root
+            - DB_PASS=root
         depends_on:
             - mariadb
         ports:
@@ -17,10 +17,10 @@ services:
         image: mariadb
         container_name: mariadb
         environment:
-            - MYSQL_ROOT_PASSWORD=1234
+            - MYSQL_ROOT_PASSWORD=root
             - MYSQL_DATABASE=todoDB
             - MYSQL_USER=user
-            - MYSQL_PASSWORD=1234
+            - MYSQL_PASSWORD=root
         volumes:
             - database:/var/lib/mysql
         ports:

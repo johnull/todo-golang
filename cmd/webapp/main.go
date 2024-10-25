@@ -24,7 +24,7 @@ func main() {
 
 	// http server config
 	server := &http.Server{
-		Addr:    ":1337",
+		Addr:    ":8080",
 		Handler: router,
 	}
 

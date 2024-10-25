@@ -10,16 +10,31 @@ DB_PASS=
 ```
 2. Install dependencies
 ```bash
-go get -u github.com/joho/godotenv
-go get -u github.com/go-sql-driver/mysql
+$ go get ./...
 ```
-3. Run
+3. Local run
+Setup database, run mysql/mariadb
+```bash
+source <complete_path>/db/migration/000001_create_items_table.up.sql
 ```
-go run cmd/webapp/main.go
+Run app
+```
+$ go run cmd/webapp/main.go
 
-http://localhost:8080
+http://localhost:1337
 ```
+4. Docker run
+```bash
+$ docker compose up -d
+```
+Setup database
+```bash
+$ docker run -v <complete_path>/db/migration:/migrations --network host migrate/migrate -path=/migrations/ -database "mysql://root:root@tcp(localhost:3306)/todoDB" up
+```
+Run app
+```bash
 
+```
 #### Structure
 ```
 ├── cmd
